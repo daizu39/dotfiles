@@ -128,7 +128,7 @@ if which gh >/dev/null 2>&1; then
 fi
 
 # refs: https://wiki.archlinux.jp/index.php/Tmux
-if which tmux >/dev/nul 2>&1; then
+if which tmux >/dev/null 2>&1; then
   [ -z $TMUX ] && exec tmux
 fi
 
