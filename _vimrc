@@ -132,5 +132,8 @@ command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 filetype plugin indent on
 syntax enable
 
-colorscheme vividchalk
+try
+  colorscheme vividchalk
+catch /^Vim\%((\a\+)\)\=:E185/
+endtry
 
