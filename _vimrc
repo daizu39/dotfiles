@@ -102,9 +102,10 @@ if &compatible
 	set nocompatible               " Be iMproved
 endif
 
-if exists('*minpac#init')
-	call minpac#init()
+function! PackInit() abort
+	packadd minpac
 
+	call minpac#init()
 	" call minpac#add('k-takata/minpac', {'type': 'opt', 'branch': 'v3.0.0'})
 
 	" Add other plugins here
@@ -118,15 +119,16 @@ if exists('*minpac#init')
 
 	" colorscheme
 	call minpac#add('tpope/vim-vividchalk', {'branch': 'v2.0'})
-
-endif
+endfunction
 
 " Define user commands for updating/cleaning the plugins.
 " " Each of them loads minpac, reloads .vimrc to register the
 " " information of plugins, then performs the task.
-command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
-command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
-command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
+command! PackUpdate call PackInit() | source $MYVIMRC | call minpac#update()
+command! PackClean  call PackInit() | source $MYVIMRC | call minpac#clean()
+command! PackStatus packadd minpac | call minpac#status()
+
+command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'quitall'})
 
 " Required:
 filetype plugin indent on
