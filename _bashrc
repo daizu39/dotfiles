@@ -138,10 +138,10 @@ if which gh >/dev/null 2>&1; then
   eval "$(gh completion -s bash)"
 fi
 
-# refs: https://wiki.archlinux.jp/index.php/Tmux
-if which tmux >/dev/null 2>&1; then
-  [ -z $TMUX ] && exec tmux
-fi
-
 [ -f ~/.bashlib/git-completion.sh ] && source ~/.bashlib/git-completion.sh
-  
+
+# invalid ctrl+s
+[ -t 0 ] && stty stop undef
+
+[ -f ~/.bash_env ] && source ~/.bash_env
+
