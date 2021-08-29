@@ -64,6 +64,7 @@ set fileformats=unix,dos,mac
 " %02v: カーソルが何列目にあるか表示
 " %L: ファイルの全行を表示
 set statusline=%F%r%h%w%=[ENC=%{(&fenc!=''?&fenc:&enc)}][FMT=%{&ff}][CODE=%04B][COL=%02v][TOTALLINE=%L]
+set laststatus=2
 
 " start tab settings(https://qiita.com/wadako111/items/755e753677dd72d8036d)
 " Anywhere SID.
