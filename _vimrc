@@ -97,6 +97,8 @@ set showtabline=2 " 常にタブラインを表示
 
 " vimを閉じても、uで履歴を戻せる
 set undofile
+" undofileを置く場所をカレントディレクトリから変更する
+set undodir=~/.vim/undo,.
 
 if &compatible
 	"vi互換の動作をやめる
@@ -120,6 +122,15 @@ function! PackInit() abort
 
 	" colorscheme
 	call minpac#add('tpope/vim-vividchalk', {'branch': 'v2.0'})
+
+	" 非同期補完プラグイン
+	" call minpac#add('prabirshrestha/asyncomplete.vim')
+	" 非同期補完プラグインのLSP連携
+	" call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
+	" LSPクライアント
+	call minpac#add('prabirshrestha/vim-lsp')
+	" Language Serverのインストール
+	call minpac#add('mattn/vim-lsp-settings')
 endfunction
 
 " Define user commands for updating/cleaning the plugins.
