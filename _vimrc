@@ -140,7 +140,27 @@ command! PackUpdate call PackInit() | source $MYVIMRC | call minpac#update()
 command! PackClean  call PackInit() | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | call minpac#status()
 
+" function! s:init_env(...)
+	" if a:0 > 0
+		
+
 command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'quitall'})
+
+function! s:on_lsp_buffer_enabled() abort
+	" バッファの設定
+	setlocal omnifunc=lsp#complete
+	setlocal signcolumn=yes
+	nmap <buffer> gd <plug>(lsp-definition)
+endfunction
+
+augroup lsp_install
+	au!
+	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" vim-lspの設定
+let g:lsp_diagnostics_echo_cursor = 0
+let g:lsp_diagnostics_float_cursor = 1
 
 " Required:
 filetype plugin indent on
