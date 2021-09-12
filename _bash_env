@@ -1,0 +1,17 @@
+# refs: https://wiki.archlinux.jp/index.php/IBus
+# 別クライアントにXWindowの画面を表示するとき
+# e.g. DISPLAY=192.168.0.2:0.0
+# export DISPLAY=
+
+# refs: https://wiki.archlinux.jp/index.php/Tmux
+if which tmux >/dev/null 2>&1; then
+	if [ -z $TMUX ]; then
+		exec tmux
+	fi
+fi
+
+# $TMUX_PANE = %0 : tmuxの初回起動時 (tmuxのpaneが0番目の時)
+if [ ! -z $TMUX -a "$TMUX_PANE" = %0 ]; then
+	run-parts --lsbsysinit /etc/update-motd.d
+fi
+
