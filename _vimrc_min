@@ -41,8 +41,6 @@ set ttymouse=xterm2
 " introduction in https://itchyny.hatenablog.com/entry/2014/12/25/090000
 " change a key mapping in normal mode
 nnoremap Y y$
-vnoremap y "*y
-
 " matchした括弧のhilight表示の時間を変更をする
 " begin
 set showmatch
@@ -99,8 +97,6 @@ set showtabline=2 " 常にタブラインを表示
 
 " vimを閉じても、uで履歴を戻せる
 set undofile
-" undofileを置く場所をカレントディレクトリから変更する
-set undodir=~/.vim/undo,.
 
 if &compatible
 	"vi互換の動作をやめる
@@ -124,15 +120,6 @@ function! PackInit() abort
 
 	" colorscheme
 	call minpac#add('tpope/vim-vividchalk', {'branch': 'v2.0'})
-
-	" 非同期補完プラグイン
-	" call minpac#add('prabirshrestha/asyncomplete.vim')
-	" 非同期補完プラグインのLSP連携
-	" call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
-	" LSPクライアント
-	call minpac#add('prabirshrestha/vim-lsp')
-	" Language Serverのインストール
-	call minpac#add('mattn/vim-lsp-settings')
 endfunction
 
 " Define user commands for updating/cleaning the plugins.
@@ -142,25 +129,12 @@ command! PackUpdate call PackInit() | source $MYVIMRC | call minpac#update()
 command! PackClean  call PackInit() | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | call minpac#status()
 
-" function! s:init_env(...)
-	" if a:0 > 0
-		
-
-" TODO: PackUpdateCloseにlsp server名の引数を与えることでインストールできるようにする
 command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'quitall'})
-
-setlocal omnifunc=lsp#complete
-setlocal signcolumn=yes
-
-" vim-lspの設定
-let g:lsp_diagnostics_echo_cursor = 0
-let g:lsp_diagnostics_float_cursor = 1
 
 " Required:
 filetype plugin indent on
 syntax enable
 
-" vividchalkのcolorschemeが存在しない場合はスキップ
 try
   colorscheme vividchalk
 catch /^Vim\%((\a\+)\)\=:E185/
