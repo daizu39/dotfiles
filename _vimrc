@@ -150,7 +150,7 @@ function! s:init_env(...)
 endfunction
 
 " TODO: PackUpdateCloseにlsp server名の引数を与えることでインストールできるようにする
-command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 's:init_env()'})
+command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'call s:init_env()'})
 
 setlocal omnifunc=lsp#complete
 setlocal signcolumn=yes
