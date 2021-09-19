@@ -142,7 +142,7 @@ command! PackUpdate call PackInit() | source $MYVIMRC | call minpac#update()
 command! PackClean  call PackInit() | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | call minpac#status()
 
-function! s:init_lsp_server(...)
+function! s:init_lsp_server(...) abort
 	for server in a:000
 		LspInstallServer server
 	endfor
