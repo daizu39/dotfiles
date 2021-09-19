@@ -144,7 +144,7 @@ command! PackStatus packadd minpac | call minpac#status()
 
 function! s:init_lsp_server(...) abort
 	for server in a:000
-		LspInstallServer server
+		" LspInstallServer server
 	endfor
 	quitall
 endfunction
