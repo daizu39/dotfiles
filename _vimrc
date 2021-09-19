@@ -142,12 +142,15 @@ command! PackUpdate call PackInit() | source $MYVIMRC | call minpac#update()
 command! PackClean  call PackInit() | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | call minpac#status()
 
-" function! s:init_env(...)
-	" if a:0 > 0
-		
+function! s:init_env(...)
+	for server in a:000
+		LspInstallServer server
+	endfor
+	quitall
+endfunction
 
 " TODO: PackUpdateCloseにlsp server名の引数を与えることでインストールできるようにする
-command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'quitall'})
+command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 's:init_env()'})
 
 setlocal omnifunc=lsp#complete
 setlocal signcolumn=yes
