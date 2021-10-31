@@ -144,7 +144,3 @@ fi
 # invalid ctrl+s
 [ -t 0 ] && stty stop undef
 
-if [ type ssh-improve.sh >/dev/null 2>&1 -a type _ssh >/dev/null 2>&1 ]; then
-	complete -F _ssh ssh-improve.sh
-fi
-

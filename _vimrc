@@ -4,6 +4,13 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
+" netrwのデフォルト表示形式の変更
+" let g:netrw_liststyle=0　（thin形式の場合）
+" let g:netrw_liststyle=1　（long形式の場合）
+" let g:netrw_liststyle=2　（wide形式の場合）
+" let g:netrw_liststyle=3　（tree形式の場合）
+let g:netrw_liststyle=3
+
 " 不可視文字の表示
 set list
 
@@ -51,7 +58,7 @@ set showmatch
 
 " https://www.tweeeety.blog/entry/2014/12/17/222935
 set encoding=utf-8
-set fileencodings=iso-2022-jp,sjis,utf-8,euc-jp
+set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
 
 " vimのステータスラインを設定
@@ -142,17 +149,8 @@ command! PackUpdate call PackInit() | source $MYVIMRC | call minpac#update()
 command! PackClean  call PackInit() | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | call minpac#status()
 
-command -nargs=? LspInstallServer echo <q-args>
-
-function! s:init_lsp_server(...) abort
-	for server in a:000
-		LspInstallServer server
-	endfor
-	quitall
-endfunction
-
 " TODO: PackUpdateCloseにlsp server名の引数を与えることでインストールできるようにする
-command! -nargs=* PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': function('s:init_lsp_server', [<f-args>])})
+command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'quitall'})
 
 setlocal omnifunc=lsp#complete
 setlocal signcolumn=yes
