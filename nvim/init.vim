@@ -1,7 +1,7 @@
 if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
 endif
 
 " netrwのデフォルト表示形式の変更
@@ -26,9 +26,9 @@ set shiftwidth=2
 " タブをスペースに展開しない
 set noexpandtab
 " tmuxによるvimの色の変化を防ぐ
-set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" set termguicolors
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " end
 
 " EXモードで補完リストの表示
@@ -40,7 +40,9 @@ set number
 set path+=**
 " vimでmouse操作の追加(https://yskwkzhr.blogspot.jp/2013/02/use-mouse-on-terminal-vim.html)
 set mouse=a
-set ttymouse=xterm2
+" for vim not nvim
+" set ttymouse=xterm2
+
 " Escape changes for normal mode in terminal mode
 "tnoremap <Esc> <C-W>N
 "au BufWinEnter * if &buftype == 'terminal' | setlocal bufhidden=hide | endif
@@ -48,7 +50,6 @@ set ttymouse=xterm2
 " introduction in https://itchyny.hatenablog.com/entry/2014/12/25/090000
 " change a key mapping in normal mode
 nnoremap Y y$
-vnoremap y "*y
 
 " matchした括弧のhilight表示の時間を変更をする
 " begin
@@ -78,7 +79,7 @@ set laststatus=2
 " start tab settings(https://qiita.com/wadako111/items/755e753677dd72d8036d)
 " Anywhere SID.
 function! s:SID_PREFIX()
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+	return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
 " Set tabline.
@@ -107,7 +108,10 @@ set showtabline=2 " 常にタブラインを表示
 " vimを閉じても、uで履歴を戻せる
 set undofile
 " undofileを置く場所をカレントディレクトリから変更する
-set undodir=~/.vim/undo,.
+set undodir=~/.envim/undo,.
+
+set swapfile
+set directory=~/.envim/swapfiles
 
 if &compatible
 	"vi互換の動作をやめる
@@ -120,26 +124,33 @@ function! PackInit() abort
 	call minpac#init()
 	" call minpac#add('k-takata/minpac', {'type': 'opt', 'branch': 'v3.0.0'})
 
+
+
 	" Add other plugins here
-	call minpac#add('vim-scripts/DrawIt', {'branch': '13'})
-	call minpac#add('junegunn/vim-easy-align', {'branch': '2.10.0'})
-	call minpac#add('tpope/vim-commentary', {'branch': 'v1.3'})
-	call minpac#add('tpope/vim-surround', {'branch': 'v2.1'})
-	call minpac#add('tpope/vim-repeat', {'branch': 'v1.2'})
-	call minpac#add('kana/vim-textobj-user', {'branch': '0.7.6'})
-	call minpac#add('kana/vim-textobj-entire', {'branch': '0.0.4'})
+	call minpac#add('vim-scripts/DrawIt', {'branch': 'stable'})
+	call minpac#add('junegunn/vim-easy-align', {'branch': 'stable'})
+	call minpac#add('tpope/vim-commentary', {'branch': 'stable'})
+	call minpac#add('tpope/vim-surround', {'branch': 'stable'})
+	call minpac#add('tpope/vim-repeat', {'branch': 'stable'})
+	call minpac#add('kana/vim-textobj-user', {'branch': 'stable'})
+	call minpac#add('kana/vim-textobj-entire', {'branch': 'stable'})
 
 	" colorscheme
-	call minpac#add('tpope/vim-vividchalk', {'branch': 'v2.0'})
+	call minpac#add('tpope/vim-vividchalk', {'branch': 'stable'})
 
+  " neovim用
+	call minpac#add('neovim/nvim-lspconfig', {'branch': 'stable'})
+	call minpac#add('williamboman/nvim-lsp-installer', {'branch': 'stable'})
+
+  " vim用
 	" 非同期補完プラグイン
 	" call minpac#add('prabirshrestha/asyncomplete.vim')
 	" 非同期補完プラグインのLSP連携
 	" call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
 	" LSPクライアント
-	call minpac#add('prabirshrestha/vim-lsp')
+	" call minpac#add('prabirshrestha/vim-lsp')
 	" Language Serverのインストール
-	call minpac#add('mattn/vim-lsp-settings')
+	" call minpac#add('mattn/vim-lsp-settings')
 endfunction
 
 " Define user commands for updating/cleaning the plugins.
@@ -152,12 +163,12 @@ command! PackStatus packadd minpac | call minpac#status()
 " TODO: PackUpdateCloseにlsp server名の引数を与えることでインストールできるようにする
 command! PackUpdateClose call PackInit() | source $MYVIMRC | call minpac#update('', {'do': 'quitall'})
 
-setlocal omnifunc=lsp#complete
-setlocal signcolumn=yes
+" setlocal omnifunc=lsp#complete
+" setlocal signcolumn=yes
 
 " vim-lspの設定
-let g:lsp_diagnostics_echo_cursor = 0
-let g:lsp_diagnostics_float_cursor = 1
+" let g:lsp_diagnostics_echo_cursor = 0
+" let g:lsp_diagnostics_float_cursor = 1
 
 " Required:
 filetype plugin indent on
@@ -165,8 +176,7 @@ syntax enable
 
 " vividchalkのcolorschemeが存在しない場合はスキップ
 try
-  colorscheme vividchalk
+	colorscheme vividchalk
 catch /^Vim\%((\a\+)\)\=:E185/
-  colorscheme ron
+	colorscheme ron
 endtry
-
