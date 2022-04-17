@@ -49,7 +49,7 @@ set mouse=a
 
 " introduction in https://itchyny.hatenablog.com/entry/2014/12/25/090000
 " change a key mapping in normal mode
-nnoremap Y y$
+" nnoremap Y y$
 
 " matchした括弧のhilight表示の時間を変更をする
 " begin
@@ -128,7 +128,7 @@ function! PackInit() abort
 
 	" Add other plugins here
 	call minpac#add('vim-scripts/DrawIt', {'branch': 'stable'})
-	call minpac#add('junegunn/vim-easy-align', {'branch': 'stable'})
+	call minpac#add('junegunn/vim-easy-align')
 	call minpac#add('tpope/vim-commentary', {'branch': 'stable'})
 	call minpac#add('tpope/vim-surround', {'branch': 'stable'})
 	call minpac#add('tpope/vim-repeat', {'branch': 'stable'})
@@ -180,3 +180,10 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
 	colorscheme ron
 endtry
+
+if system('uname -a | grep microsoft') != ''
+  augroup myYank
+    autocmd!
+    autocmd TextYankPost * :call system('clip.exe', @")
+  augroup END
+endif"
